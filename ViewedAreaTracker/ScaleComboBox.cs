@@ -1,63 +1,84 @@
 ﻿using ArcGIS.Desktop.Framework.Contracts;
+using System;
+using System.Globalization;
 
 namespace ViewedAreaTracker
 {
     internal class ScaleComboBox : ComboBox
     {
-        public static double MaximumScale { get; private set; } = double.MaxValue;
+        public static double MaximumScale { get; private set; }
+            = double.MaxValue;
+
 
         public ScaleComboBox()
         {
             Add(new ComboBoxItem("All scales"));
+
             Add(new ComboBoxItem("1:1,000"));
             Add(new ComboBoxItem("1:2,000"));
             Add(new ComboBoxItem("1:5,000"));
+
             Add(new ComboBoxItem("1:10,000"));
             Add(new ComboBoxItem("1:20,000"));
             Add(new ComboBoxItem("1:50,000"));
-            Add(new ComboBoxItem("1:100,000"));
+            Add(new ComboBoxItem("1:70,000"));
 
-            SelectedItem = ItemCollection[0];
+            Add(new ComboBoxItem("1:100,000"));
+            Add(new ComboBoxItem("1:200,000"));
+            Add(new ComboBoxItem("1:300,000"));
+            Add(new ComboBoxItem("1:400,000"));
+            Add(new ComboBoxItem("1:500,000"));
+
+            Add(new ComboBoxItem("1:750,000"));
+
+            Add(new ComboBoxItem("1:1,000,000"));
+            Add(new ComboBoxItem("1:1,500,000"));
+            Add(new ComboBoxItem("1:2,000,000"));
+            Add(new ComboBoxItem("1:3,000,000"));
+            Add(new ComboBoxItem("1:5,000,000"));
+            Add(new ComboBoxItem("1:10,000,000"));
+
+
+            SelectedItem =
+                ItemCollection[0];
         }
 
-        protected override void OnSelectionChange(ComboBoxItem item)
+
+        protected override void OnSelectionChange(
+            ComboBoxItem item)
         {
             if (item == null)
                 return;
 
-            switch (item.Text)
+
+            // All scales = no upper limit
+            if (item.Text == "All scales")
             {
-                case "1:1,000":
-                    MaximumScale = 1000;
-                    break;
+                MaximumScale =
+                    double.MaxValue;
 
-                case "1:2,000":
-                    MaximumScale = 2000;
-                    break;
+                return;
+            }
 
-                case "1:5,000":
-                    MaximumScale = 5000;
-                    break;
+            string scaleText =
+                item.Text
+                    .Replace("1:", "")
+                    .Replace(",", "");
 
-                case "1:10,000":
-                    MaximumScale = 10000;
-                    break;
 
-                case "1:20,000":
-                    MaximumScale = 20000;
-                    break;
-
-                case "1:50,000":
-                    MaximumScale = 50000;
-                    break;
-
-                case "1:100,000":
-                    MaximumScale = 100000;
-                    break;
-
-                default:
-                    MaximumScale = double.MaxValue;
-                    break;
+            if (double.TryParse(
+                    scaleText,
+                    NumberStyles.Number,
+                    CultureInfo.InvariantCulture,
+                    out double scale))
+            {
+                MaximumScale =
+                    scale;
+            }
+            else
+            {
+                MaximumScale =
+                    double.MaxValue;
             }
         }
     }

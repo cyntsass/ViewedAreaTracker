@@ -7,9 +7,9 @@
         xsi:schemaLocation="http://schemas.esri.com/DADF/Registry file:///C:/Users/xsascy/AppData/Local/Programs/ArcGIS/Pro/bin/ArcGIS.Desktop.Framework.xsd">
 
 	<AddInInfo id="{aeaec78e-910c-4cff-b48e-d4100dd7499f}"
-			   version="1.0"
-			   desktopVersion="3.6.59527"
-			   product="ArcGISPro">
+               version="1.0"
+               desktopVersion="3.7.1901"
+               product="ArcGISPro">
 
 		<Name>ViewedAreaTracker</Name>
 		<Description>Records the map areas viewed while navigating in ArcGIS Pro.</Description>
@@ -21,36 +21,54 @@
 
 	</AddInInfo>
 
+
 	<modules>
 
 		<insertModule id="ViewedAreaTracker_Module"
-					  className="Module1"
-					  autoLoad="false"
-					  caption="Viewed Area Tracker">
+                      className="Module1"
+                      autoLoad="false"
+                      caption="Viewed Area Tracker">
 
 			<tabs>
 			</tabs>
 
+
+			<!-- ================================================= -->
+			<!-- RIBBON GROUP                                      -->
+			<!-- ================================================= -->
+
 			<groups>
 
 				<group id="ViewedAreaTracker_Group1"
-					   caption="Viewed Area Tracker"
-					   appearsOnAddInTab="true">
+                       caption="Viewed Area Tracker"
+                       appearsOnAddInTab="true">
 
 					<button refID="ViewedAreaTracker_StartTrackingButton"/>
+
 					<button refID="ViewedAreaTracker_StopTrackingButton"/>
+
 					<comboBox refID="ViewedAreaTracker_ScaleComboBox"/>
 
 				</group>
 
 			</groups>
 
+
+			<!-- ================================================= -->
+			<!-- CONTROLS                                          -->
+			<!-- ================================================= -->
+
 			<controls>
 
+
+				<!-- START TRACKING -->
+
 				<button id="ViewedAreaTracker_StartTrackingButton"
-						caption="Start Tracking"
-						className="StartTrackingButton"
-						loadOnClick="true">
+                        caption="Start Tracking"
+                        className="StartTrackingButton"
+                        loadOnClick="true"
+                        smallImage="GenericButtonGreen16"
+                        largeImage="GenericButtonGreen32">
 
 					<tooltip heading="Start tracking">
 						Start recording the visible map area while you pan and zoom.
@@ -58,10 +76,15 @@
 
 				</button>
 
+
+				<!-- STOP TRACKING -->
+
 				<button id="ViewedAreaTracker_StopTrackingButton"
-						caption="Stop Tracking"
-						className="StopTrackingButton"
-						loadOnClick="true">
+                        caption="Stop Tracking"
+                        className="StopTrackingButton"
+                        loadOnClick="true"
+                        smallImage="GenericButtonRed16"
+                        largeImage="GenericButtonRed32">
 
 					<tooltip heading="Stop tracking">
 						Stop recording viewed map areas.
@@ -69,17 +92,21 @@
 
 				</button>
 
+
+				<!-- MAXIMUM SCALE -->
+
 				<comboBox id="ViewedAreaTracker_ScaleComboBox"
-						  caption="Maximum Scale"
-						  className="ScaleComboBox"
-						  loadOnClick="true"
-						  width="120">
+                          caption="Maximum Scale"
+                          className="ScaleComboBox"
+                          loadOnClick="true"
+                          width="200">
 
 					<tooltip heading="Maximum recording scale">
 						Only record viewed areas when the map is at this scale or closer.
 					</tooltip>
 
 				</comboBox>
+
 
 			</controls>
 
